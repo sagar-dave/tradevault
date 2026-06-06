@@ -24,4 +24,6 @@ jobs:
         with:
           context: ./backend
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/tradevault-api:latest
+          tags: |
+            ${{ secrets.DOCKERHUB_USERNAME }}/tradevault-api:latest
+            ${{ secrets.DOCKERHUB_USERNAME }}/tradevault-api:${{ github.sha }}
