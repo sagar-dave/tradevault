@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tradevault-api
+  namespace: tradevault
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tradevault-api
+  template:
+    metadata:
+      labels:
+        app: tradevault-api
+    spec:
+      containers:
+        - name: tradevault-api
+          image: sagardave/tradevault-api:latest
+          imagePullPolicy: Always
+
+          ports:
+            - containerPort: 8000
+
+          envFrom:
+            - configMapRef:
+                name: tradevault-config
+            - secretRef:
+                name: tradevault-secret
+
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 5
+            periodSeconds: 5
+
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 10
+            periodSeconds: 10
