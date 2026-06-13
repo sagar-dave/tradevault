@@ -14,8 +14,7 @@ app.include_router(trades_router)
 @app.get("/")
 def root():
     return {
-        "message": "Welcome to TradeVault API v2",
-        "pod": socket.gethostname()
+        "message": "Welcome to TradeVault API v3"
     }
 
 
