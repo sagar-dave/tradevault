@@ -3,10 +3,14 @@ kind: Service
 metadata:
   name: tradevault-api
   namespace: tradevault
+  labels:
+    app: tradevault-api
 spec:
+  type: NodePort
   selector:
     app: tradevault-api
   ports:
-    - port: 8000
+    - name: http
+      port: 8000
       targetPort: 8000
-  type: NodePort
+      protocol: TCP
