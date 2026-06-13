@@ -1,5 +1,8 @@
 name: Backend CI
 
+permissions:
+  contents: write
+
 on:
   push:
     branches: [ main ]
@@ -7,6 +10,7 @@ on:
 
 jobs:
   build-backend:
+    if: github.actor != 'github-actions'
     runs-on: ubuntu-latest
 
     steps:
@@ -14,12 +18,14 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Login to Docker Hub
+        if : github.event_name == 'push'
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build and push backend Docker image
+        if : github.event_name == 'push'
         uses: docker/build-push-action@v6
         with:
           context: ./backend
@@ -27,3 +33,17 @@ jobs:
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/tradevault-api:latest
             ${{ secrets.DOCKERHUB_USERNAME }}/tradevault-api:${{ github.sha }}
+
+      - name: Update Kubernetes image tag
+        if : github.event_name == 'push'
+        run: |
+          sed -i "s|image: .*tradevault-api:.*|image: ${{ secrets.DOCKERHUB_USERNAME }}/tradevault-api:${{ github.sha }}|" kubernetes/api-deployment.yaml
+
+      - name: Commit updated image tag
+        if : github.event_name == 'push'
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add kubernetes/api-deployment.yaml
+          git commit -m "Update image tag to ${{ github.sha }}" || echo "No changes to commit"
+          git push
