@@ -17,3 +17,18 @@ output "private_subnet_ids" {
   description = "Private subnet IDs"
   value       = aws_subnet.private[*].id
 }
+
+output "app_security_group_id" {
+  description = "Security group ID for TradeVault application"
+  value       = aws_security_group.app.id
+}
+
+output "db_security_group_id" {
+  description = "Security group ID for TradeVault database"
+  value       = aws_security_group.db.id
+}
+
+output "ecr_repository_url" {
+  description = "ECR repository URL for TradeVault API image"
+  value       = aws_ecr_repository.api.repository_url
+}
