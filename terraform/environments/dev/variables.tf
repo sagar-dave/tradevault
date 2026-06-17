@@ -39,3 +39,15 @@ variable "availability_zones" {
   type        = list(string)
   default     = ["us-east-2a", "us-east-2b"]
 }
+
+variable "github_owner" {
+  description = "GitHub repository owner"
+  type        = string
+  default     = "sagar-dave"
+}
+
+variable "github_repo" {
+  description = "GitHub repository name"
+  type        = string
+  default     = "tradevault"
+}
