@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: tradevault-api
-          image: sagardave/tradevault-api:d573ef693c3287070fba9667c4dd321c1391a841
+          image: sagardave/tradevault-api:0c599383056955479aed7f6938707cc14309e847
           imagePullPolicy: Always
           
           ports:
