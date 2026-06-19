@@ -244,3 +244,46 @@ resource "aws_iam_role_policy_attachment" "github_actions_ecr_push" {
   role       = aws_iam_role.github_actions_ecr.name
   policy_arn = aws_iam_policy.github_actions_ecr_push.arn
 }
+
+resource "aws_db_subnet_group" "postgres" {
+  name       = "${local.name_prefix}-postgres-subnet-group"
+  subnet_ids = aws_subnet.private[*].id
+  tags = {
+    Name        = "${local.name_prefix}-postgres-subnet-group"
+    Project     = var.project_name
+    Environment = var.environment
+  }
+}
+
+resource "aws_db_instance" "poatgres" {
+  identifier = "${local.name_prefix}-postgres"
+
+  engine         = "postgres"
+  engine_version = "16"
+  instance_class = "db.t4g.micro"
+
+  allocated_storage     = 20
+  max_allocated_storage = 100
+  storage_type          = "gp3"
+  storage_encrypted     = true
+
+  db_name  = var.db_name
+  username = var.db_username
+  password = var.db_password
+
+  db_subnet_group_name   = aws_db_subnet_group.postgres.name
+  vpc_security_group_ids = [aws_security_group.db.id]
+
+  publicly_accessible = false
+  multi_az            = false
+
+  backup_retention_period = 1
+  deletion_protection     = false
+  skip_final_snapshot     = true
+
+  tags = {
+    Name        = "${local.name_prefix}-postgres"
+    Project     = var.project_name
+    Environment = var.environment
+  }
+}

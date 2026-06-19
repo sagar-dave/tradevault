@@ -51,3 +51,21 @@ variable "github_repo" {
   type        = string
   default     = "tradevault"
 }
+
+variable "db_name" {
+  description = "Initial database name for Tradevault"
+  type        = string
+  default     = "tradevault"
+}
+
+variable "db_username" {
+  description = "Master username for TradeVault RDS PostgreSQL"
+  type        = string
+  default     = "tradevaultadmin"
+}
+
+variable "db_password" {
+  description = "Master password for TradeVault RDS PostgreSQL"
+  type        = string
+  sensitive   = true
+}

@@ -37,3 +37,18 @@ output "github_actions_role_arn" {
   description = "IAM role ARN used by GitHub Actions to push images to ECR"
   value       = aws_iam_role.github_actions_ecr.arn
 }
+
+output "rds_endpoint" {
+  description = "RDS PostgreSQL endpoint"
+  value       = aws_db_instance.poatgres.address
+}
+
+output "rds_port" {
+  description = "RDS PostgreSQL port"
+  value       = aws_db_instance.poatgres.port
+}
+
+output "rds_database_name" {
+  description = "RDS PostgreSQL database name"
+  value       = aws_db_instance.poatgres.db_name
+}
