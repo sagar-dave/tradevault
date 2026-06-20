@@ -52,3 +52,23 @@ output "rds_database_name" {
   description = "RDS PostgreSQL database name"
   value       = aws_db_instance.poatgres.db_name
 }
+
+output "eks_cluster_name" {
+  description = "EKS cluster name"
+  value       = module.eks.cluster_name
+}
+
+output "eks_cluster_endpoint" {
+  description = "EKS cluster API endpoint"
+  value       = module.eks.cluster_endpoint
+}
+
+output "eks_cluster_security_group_id" {
+  description = "EKS cluster security group ID"
+  value       = module.eks.cluster_security_group_id
+}
+
+output "eks_node_security_group_id" {
+  description = "EKS node security group ID"
+  value       = module.eks.node_security_group_id
+}

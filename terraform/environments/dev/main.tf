@@ -287,3 +287,81 @@ resource "aws_db_instance" "poatgres" {
     Environment = var.environment
   }
 }
+
+resource "aws_eip" "nat" {
+  domain = "vpc"
+
+  tags = {
+    Name        = "${local.name_prefix}-nat-eip"
+    Project     = var.project_name
+    Environment = var.environment
+  }
+}
+
+resource "aws_nat_gateway" "main" {
+  allocation_id = aws_eip.nat.id
+  subnet_id     = aws_subnet.public[0].id
+
+  tags = {
+    Name        = "${local.name_prefix}-nat-gateway"
+    Project     = var.project_name
+    Environment = var.environment
+  }
+
+  depends_on = [aws_internet_gateway.main]
+}
+
+resource "aws_route_table" "private" {
+  vpc_id = aws_vpc.main.id
+
+  tags = {
+    Name        = "${local.name_prefix}-private-rt"
+    Project     = var.project_name
+    Environment = var.environment
+  }
+}
+
+resource "aws_route" "private_nat_access" {
+  route_table_id         = aws_route_table.private.id
+  destination_cidr_block = "0.0.0.0/0"
+  nat_gateway_id         = aws_nat_gateway.main.id
+}
+
+resource "aws_route_table_association" "private" {
+  count = length(aws_subnet.private)
+
+  subnet_id      = aws_subnet.private[count.index].id
+  route_table_id = aws_route_table.private.id
+}
+
+module "eks" {
+  source  = "terraform-aws-modules/eks/aws"
+  version = "~> 20.0"
+
+  cluster_name    = "${local.name_prefix}-eks"
+  cluster_version = var.eks_cluster_version
+
+  cluster_endpoint_public_access           = true
+  enable_cluster_creator_admin_permissions = true
+
+  vpc_id     = aws_vpc.main.id
+  subnet_ids = aws_subnet.private[*].id
+
+  enable_irsa = true
+
+  eks_managed_node_groups = {
+    default = {
+      instance_types = var.eks_node_instance_types
+
+      min_size     = var.eks_node_min_size
+      max_size     = var.eks_node_max_size
+      desired_size = var.eks_node_desired_size
+    }
+  }
+
+  tags = {
+    Name        = "${local.name_prefix}-eks"
+    Project     = var.project_name
+    Environment = var.environment
+  }
+}
