@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: tradevault-config
+  namespace: tradevault
+data:
+  POSTGRES_DB: "tradevault"
+  POSTGRES_HOST: "tradevault-dev-postgres.cvq8m24i6p6o.us-east-2.rds.amazonaws.com"
+  POSTGRES_PORT: "5432"
