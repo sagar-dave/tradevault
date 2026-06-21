@@ -230,3 +230,7 @@ override.tf
 override.tf.json
 *_override.tf
 *_override.tf.json
+
+external-secrets-policy.json
+aws-load-balancer-controller-policy.json
+kubernetes/eks/api-secret.yaml
