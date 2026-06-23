@@ -1,63 +1,34 @@
 name: Backend CI
 
-permissions:
-  contents: write
-  id-token: write
-
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
 
 jobs:
   build-backend:
-    if: github.actor != 'github-actions'
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Login to Docker Hub
-        if: github.event_name == 'push'
-        uses: docker/login-action@v3
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          python-version: "3.11"
 
-      - name: Configure AWS credentials using OIDC
-        if: github.event_name == 'push'
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          role-to-assume: ${{ vars.AWS_ROLE_ARN }}
-          aws-region: ${{ vars.AWS_REGION }}
-
-      - name: Login to Amazon ECR
-        if: github.event_name == 'push'
-        uses: aws-actions/amazon-ecr-login@v2
-
-      - name: Build and push backend Docker image
-        if: github.event_name == 'push'
-        uses: docker/build-push-action@v6
-        with:
-          context: ./backend
-          push: true
-          tags: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/tradevault-api:latest
-            ${{ secrets.DOCKERHUB_USERNAME }}/tradevault-api:${{ github.sha }}
-            ${{ vars.AWS_ACCOUNT_ID }}.dkr.ecr.${{ vars.AWS_REGION }}.amazonaws.com/tradevault-dev-api:latest
-            ${{ vars.AWS_ACCOUNT_ID }}.dkr.ecr.${{ vars.AWS_REGION }}.amazonaws.com/tradevault-dev-api:${{ github.sha }}
-
-      - name: Update Kubernetes image tag
-        if: github.event_name == 'push'
+      - name: Install backend dependencies
+        working-directory: ./backend
         run: |
-          sed -i "s|image: .*tradevault-api:.*|image: ${{ secrets.DOCKERHUB_USERNAME }}/tradevault-api:${{ github.sha }}|" kubernetes/api-deployment.yaml
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
 
-      - name: Commit updated image tag
-        if: github.event_name == 'push'
+      - name: Validate Python imports
+        working-directory: ./backend
         run: |
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
-          git add kubernetes/api-deployment.yaml
-          git commit -m "Update image tag to ${{ github.sha }}" || echo "No changes to commit"
-          git push
+          python -m compileall app
+
+      - name: Build backend Docker image
+        run: |
+          docker build -t tradevault-api:ci ./backend
