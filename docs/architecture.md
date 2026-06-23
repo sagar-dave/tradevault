@@ -4,6 +4,15 @@ This document explains the architecture of the TradeVault cloud-native DevOps pr
 
 TradeVault is a FastAPI + PostgreSQL application deployed on AWS using Terraform, Kubernetes, EKS, GitHub Actions, ECR, ArgoCD, AWS ALB, AWS Secrets Manager, External Secrets Operator, and RDS PostgreSQL.
 
+## Deployment Tracks
+
+This repository contains two Kubernetes deployment tracks:
+
+- `kubernetes/local/` — local Minikube deployment using in-cluster PostgreSQL, NGINX Ingress, and local Kubernetes secrets.
+- `kubernetes/eks/` — AWS EKS deployment using Amazon RDS PostgreSQL, AWS Application Load Balancer, AWS Secrets Manager, and External Secrets Operator.
+
+The local track is useful for low-cost local testing. The EKS track represents the production-style AWS deployment used for the final portfolio proof.
+
 ---
 
 ## 1. High-Level Architecture

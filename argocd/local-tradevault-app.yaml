@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: tradevault
+  name: tradevault-local
   namespace: argocd
 spec:
   project: default
@@ -9,7 +9,7 @@ spec:
   source:
     repoURL: https://github.com/sagar-dave/tradevault.git
     targetRevision: main
-    path: kubernetes
+    path: kubernetes/local
 
   destination:
     server: https://kubernetes.default.svc

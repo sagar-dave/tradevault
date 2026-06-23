@@ -367,24 +367,37 @@ tradevault/
 │   └── app/
 │       ├── main.py
 │       └── database.py
+├── docs/
+│   ├── architecture.md
+│   ├── runbook.md
+│   ├── proof.md
+│   └── screenshots/
 ├── kubernetes/
-│   ├── eks/
+│   ├── local/
 │   │   ├── api-deployment.yaml
 │   │   ├── api-service.yaml
-│   │   ├── api-configmap.yaml
 │   │   ├── api-ingress.yaml
-│   │   └── external-secrets/
-│   │       ├── secret-store.yaml
-│   │       └── external-secret.yaml
-│   └── ...
+│   │   ├── postgres-deployment.yaml
+│   │   ├── postgres-pvc.yaml
+│   │   └── postgres-service.yaml
+│   └── eks/
+│       ├── api-deployment.yaml
+│       ├── api-service.yaml
+│       ├── api-configmap.yaml
+│       ├── api-ingress.yaml
+│       └── external-secrets/
+│           ├── secret-store.yaml
+│           └── external-secret.yaml
 ├── terraform/
 │   ├── bootstrap/
 │   └── environments/
 │       └── dev/
 ├── argocd/
-│   └── eks-tradevault-app.yaml
+│   ├── eks-tradevault-app.yaml
+│   └── local-tradevault-app.yaml
 ├── .github/
 │   └── workflows/
+│       └── backend-ci.yml
 └── README.md
 ```
 
