@@ -1,0 +1,1 @@
+![alt text](01-argocd-synced-healthy.png) ![alt text](02-eks-api-pods-running.png) ![alt text](03-alb-ingress-active.png) ![alt text](04-external-secrets-synced.png) ![alt text](05-terraform-no-changes.png) ![alt text](06-public-api-endpoint.png) ![alt text](07-rds-connectivity-proof.png) ![alt text](08-browser-api-proof.png)
