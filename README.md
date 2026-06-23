@@ -374,13 +374,17 @@ tradevault/
 │   └── screenshots/
 ├── kubernetes/
 │   ├── local/
+│   │   ├── namespace.yaml
 │   │   ├── api-deployment.yaml
 │   │   ├── api-service.yaml
 │   │   ├── api-ingress.yaml
+│   │   ├── api-secret.example.yaml
 │   │   ├── postgres-deployment.yaml
 │   │   ├── postgres-pvc.yaml
-│   │   └── postgres-service.yaml
+│   │   ├── postgres-service.yaml
+│   │   └── monitoring manifests
 │   └── eks/
+│       ├── namespace.yaml
 │       ├── api-deployment.yaml
 │       ├── api-service.yaml
 │       ├── api-configmap.yaml

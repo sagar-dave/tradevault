@@ -1,6 +1,7 @@
-from sqlalchemy import Column, Integer, String, Float, true
+from sqlalchemy import Column, Float, Integer, String
 
 from app.database import Base
+
 
 class TradeModel(Base):
     __tablename__ = "trades"
