@@ -340,6 +340,8 @@ Expected DB response:
 
 ## Proof Screenshots
 
+> Note: The AWS EKS environment was successfully deployed and validated, then destroyed to avoid ongoing cloud costs. Deployment proof is preserved in the screenshots below and in [`docs/proof.md`](docs/proof.md).
+
 The project includes proof screenshots for:
 
 1. EKS worker nodes ready
