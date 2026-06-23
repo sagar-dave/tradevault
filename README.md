@@ -471,3 +471,5 @@ Code
 ```
 
 This project is designed to showcase practical DevOps engineering skills using real AWS infrastructure and production-style deployment patterns.
+
+Selected deployment proof screenshots are available here: [Deployment Proof](docs/proof.md)
