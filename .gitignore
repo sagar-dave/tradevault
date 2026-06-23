@@ -234,4 +234,7 @@ override.tf.json
 
 external-secrets-policy.json
 aws-load-balancer-controller-policy.json
+
+# Kubernetes secrets
+kubernetes/local/api-secret.yaml
 kubernetes/eks/api-secret.yaml
