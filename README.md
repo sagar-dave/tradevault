@@ -2,7 +2,29 @@
 
 TradeVault is a cloud-native trade journal API built with Python FastAPI and deployed on AWS using Docker, EKS, Terraform, GitHub Actions, ArgoCD, AWS Load Balancer Controller, RDS PostgreSQL, and External Secrets.
 
-This project demonstrates a production-style DevOps workflow: infrastructure as code, containerized application delivery, Kubernetes deployment, GitOps-based synchronization, secure secrets management, managed database connectivity, and public application exposure through an AWS Application Load Balancer.
+This project is designed as a recruiter-verifiable DevOps proof project, not just a backend application.
+
+---
+
+## Recruiter Summary
+
+TradeVault is a production-style DevOps portfolio project that demonstrates end-to-end cloud delivery on AWS.
+
+It shows how a backend API moves from source code to a running cloud environment using Docker, GitHub Actions, Amazon ECR, Terraform-managed AWS infrastructure, Amazon EKS, ArgoCD GitOps, AWS ALB, External Secrets Operator, AWS Secrets Manager, and Amazon RDS PostgreSQL.
+
+The AWS environment was successfully deployed, validated, documented with proof screenshots, and then destroyed to control cloud cost.
+
+**Primary skills demonstrated:**
+- AWS cloud infrastructure
+- Terraform infrastructure as code
+- Docker containerization
+- Kubernetes deployment on EKS
+- GitHub Actions CI/CD
+- ArgoCD GitOps delivery
+- External Secrets + AWS Secrets Manager
+- RDS PostgreSQL connectivity
+- ALB-based public API exposure
+- Production-style documentation and cost control
 
 ---
 
